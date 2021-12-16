@@ -46,8 +46,7 @@ body {
     width: 20%;
     opacity: 0.9;
     margin: auto;
-
-
+ 
   }
   
   .registerbtn:hover {
@@ -61,8 +60,8 @@ body {
   
   /* Set a grey background color and center the text of the "sign in" section */
   .signin {
-    background-color: #f1f1f1;
-    text-align: center;
+    background-color: #fffefe;
+    
   }
 
   
