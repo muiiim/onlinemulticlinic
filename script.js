@@ -90,3 +90,24 @@ async function checkOut(name, date, time){
     
 }
 
+async function createAppointment(doctor, patient, date){
+    const obj = {
+        doctor: doctor,
+        patient: patient,
+        date: date
+    }
+    console.log(obj);
+    const res = await (await fetch("http://localhost:3000/makeAppointment/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+
+}

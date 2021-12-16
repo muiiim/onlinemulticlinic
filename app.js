@@ -47,7 +47,6 @@ router.get('/appointment_of_doctor/:name', (req,res) => {
         })
     });
 
-    // console.log(doc_id);
     
 });
 
@@ -107,6 +106,12 @@ router.post('/checkout/', (req, res) => {
             res.send({error:false,message:'Data added'});
         })
     })
+})
+
+router.post('/makeAppointment/', (req, res) => {
+    let data = req.body
+    console.log(data);
+    
 })
 
 var port = process.env.RDS_PORT || 3000
