@@ -60,7 +60,7 @@ router.post('/checkin/', (req, res) => {
         return res.status(400).send({error: true, message:'Please provide Data.'});
     }
     // console.log(patient.username); [patient.username, patient.username] (pfname=? or plname=?)
-    dbConn.query('select * from patient where (pfname=? or plname=?)',['Mui', 'Mui'], (error, results) =>{
+    dbConn.query('select * from patient where (pfname=? or plname=?)',[patient.username, patient.username], (error, results) =>{
         if (error){
             throw error
         }
@@ -72,6 +72,35 @@ router.post('/checkin/', (req, res) => {
         patient_id = results[0].pid
         console.log(patient.time);
         dbConn.query('insert into clinic.check (c_pid, c_pname, date, time, checkio) value (?, ?, ?, ?, ?)', [patient_id, patient_name, patient.date, patient.time, 'IN'], (error, results) => {
+            if (error){
+                throw error
+            }
+            res.send({error:false,message:'Data added'});
+        })
+    })
+})
+
+router.post('/checkout/', (req, res) => {
+    let patient = req.body
+    console.log(patient);
+    let patient_name
+    let patient_id
+    if(!patient.username || !patient.date){
+        return res.status(400).send({error: true, message:'Please provide Data.'});
+    }
+    // console.log(patient.username); [patient.username, patient.username] (pfname=? or plname=?)
+    dbConn.query('select * from patient where (pfname=? or plname=?)',[patient.username, patient.username], (error, results) =>{
+        if (error){
+            throw error
+        }
+        console.log(results);
+        if (!results){
+            return res.status(400).send({error: true, message:'User not found.'});
+        }
+        patient_name = results[0].pfname
+        patient_id = results[0].pid
+        console.log(patient.time);
+        dbConn.query('insert into clinic.check (c_pid, c_pname, date, time, checkio) value (?, ?, ?, ?, ?)', [patient_id, patient_name, patient.date, patient.time, 'OUT'], (error, results) => {
             if (error){
                 throw error
             }

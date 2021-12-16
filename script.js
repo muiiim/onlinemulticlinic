@@ -41,12 +41,35 @@ async function searchAppointment(value) {
 async function checkIn(name, date, time){
     console.log('hehe');
     const obj = {
-        name: name,
+        username: name,
         date: date,
-        time: time
+        time: time + ':00'
     }
     console.log(obj);
     const res = await (await fetch("http://localhost:3000/checkin/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+    
+}
+
+async function checkOut(name, date, time){
+    console.log('hoho');
+    const obj = {
+        username: name,
+        date: date,
+        time: time + ':00'
+    }
+    console.log(obj);
+    const res = await (await fetch("http://localhost:3000/checkout/", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
