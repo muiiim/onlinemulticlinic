@@ -1,3 +1,10 @@
+.result{
+  margin: auto;
+  text-align: center;
+  
+
+}
+
 body { 
   background: #f8f9fb ; 
   font-family: 'Roboto', sans-serif;

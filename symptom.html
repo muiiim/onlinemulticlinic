@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sympton</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="appointment.css">
+    <link rel="stylesheet" type="text/css" href="symptom.css">
     <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,300;1,900&display=swap" rel="stylesheet">
@@ -55,10 +55,22 @@
     </div>
 
     <div class="container">
-      <label for="docname"><b>patient name</b></label>
-      <input type="text" placeholder="Enter name" id="docname" required>
+
+      <label for="docID"><b>Doctor ID</b></label>
+      <input type="text" placeholder="Enter doctor ID" id="docID" required>
+
+      <label for="patname"><b>Patient name</b></label>
+      <input type="text" placeholder="Enter patient name" id="Patname" required>
+
+      <label for="symptom"><b>Patient Symptom</b></label>
+      <input type="text" placeholder="Enter symptom" id="symptom" required>
+
+      <label for="Comment"><b>Comment</b></label>
+      <input type="text" placeholder="Doctor Comment" id="comment" required>
+
+
           
-      <button type="submit" onclick="search(document.getElementById('docname').value)">search</button>
+      <button type="submit" onclick="search(document.getElementById('docname').value)">Submit</button>
       
     </div>
 
