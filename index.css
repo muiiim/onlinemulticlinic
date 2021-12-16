@@ -1,0 +1,60 @@
+#main{
+    margin: 50px 0;
+}
+
+.doctorlist{
+    align-items: center;
+    display:flex;
+    justify-content: center;
+}
+#loginform {
+    display:flex;
+    justify-content: center;
+
+}
+body { 
+    background: #f8f9fb ; 
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+figcaption { 
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.col-4{
+    transition: transform 0.5s;
+    
+}
+
+.col-4:hover{
+    transform: translateY(-5px);
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+figcaption {
+    color: black;
+    
+}
+
+.far.fa-user:hover {
+    transform: translateY(-3px);
+}
+
+.fas.fa-cart-plus:hover {
+    transform: translateY(-3px);
+}
+
+.fa.fa-facebook {
+    margin-left: 5px;
+    text-decoration: none;
+}
+/* .carousel{
+    z-index: 0
+    } */

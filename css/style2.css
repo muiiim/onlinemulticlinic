@@ -1,0 +1,29 @@
+
+.loginbox p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: left;
+   
+}
+
+.loginbox h1{
+    margin: 25px;
+   
+}
+
+.loginbox a {
+    text-decoration:underline;
+    color: blue;
+    font-size: 10px;
+       
+}
+
+.loginbox input {
+    width: 100%;
+    margin-bottom: 20px;
+    
+    
+}
+
+
