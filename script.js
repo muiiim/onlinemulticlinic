@@ -27,16 +27,22 @@ async function searchAppointment(value) {
     appointments.forEach(app =>{
         lists += 
         `
-        <h3>Patient ID: ${app.a_pid} </h3><br>
-        Name: ${app.n_patient} <br>
-        Date: ${new Date(app.date).toDateString()} <br>
-        Time: ${app.time} <br>
-        Status: ${app.status} <br><br>
+        <link rel="stylesheet" type="text/css" href="appointment.css">
+        <div class="result">
+            <h3>Patient ID: ${app.a_pid} </h3><br>
+            Name: ${app.n_patient} <br>
+            Date: ${new Date(app.date).toDateString()} <br>
+            Time: ${app.time} <br>
+            Status: ${app.status} <br><br>
+        </div>
+        
         `
+
     })
 
     document.getElementById("res_appointment").innerHTML = lists
 }
+
 
 async function checkIn(name, date, time){
     console.log('hehe');
@@ -83,3 +89,4 @@ async function checkOut(name, date, time){
     }
     
 }
+
