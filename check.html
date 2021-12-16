@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checking in-out</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="check.css">
     <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
+    <script src='script.js'></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,300;1,900&display=swap" rel="stylesheet">
 
@@ -58,14 +59,22 @@
   </div>
 
   <div class="container">
-    <label for="id"><b>Patient Checking</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="pname"><b>Patient Name</b></label>
+    <input type="text" placeholder="Patient name" name="pname" id="patient_name" required>
 
 
-    <label for="date"><b>date</b></label><br>
-    <input type="date" placeholder="DD-MM-YY" name="date" required><br>
-        
-    <button type="submit" class="mt-4">Submit</button>
+    <label for="date"><b>date-time</b></label><br>
+    <div class="datetime-container">
+      <input type="date" placeholder="DD-MM-YY" name="date" id="date" required>
+      <input type="time" name="time" id="time">
+    </div>
+    
+    <br><br>
+      <div class="button-container">
+        <button type="submit" class="btn btn-lg btn-success" onclick="checkIn(document.getElementById('patient_name').value, document.getElementById('date').value, document.getElementById('time').value)">Check-in</button> <button type="submit" class="btn btn-lg btn-danger" onclick="checkOut(document.getElementById('patient_name').value, document.getElementById('date').value, document.getElementById('time').value)">Check-out</button>
+      </div>  
+    
     
   </div>
 
