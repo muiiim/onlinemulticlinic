@@ -13,7 +13,7 @@ function isString(x) {
     return Object.prototype.toString.call(x) === "[object String]"
   }
 
-async function search(value) {
+async function searchAppointment(value) {
     console.log("haha")
     const res = await (await fetch("http://localhost:3000/appointment_of_doctor/" +value, {
         method: 'GET'
@@ -36,4 +36,27 @@ async function search(value) {
     })
 
     document.getElementById("res_appointment").innerHTML = lists
+}
+
+async function checkIn(name, date, time){
+    console.log('hehe');
+    const obj = {
+        name: name,
+        date: date,
+        time: time
+    }
+    console.log(obj);
+    const res = await (await fetch("http://localhost:3000/checkin/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+    
 }
