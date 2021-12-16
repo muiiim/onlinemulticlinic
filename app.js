@@ -161,9 +161,9 @@ router.get('/getAppointment/:aid', (req,res) => {
             throw error;
         }
         if (results.length === 0){
-            return res.status(400).send({error: true, message:'User not found.'});
+            return res.status(400).send({error: true, message:'Patient not found.'});
         }
-        patient_name = results[0].n_patient
+        patient_name = results[0].n_patient.split(' ')
         doctor_id = results[0].a_did
         a_date = results[0].date
         dbConn.query('select * from doctor where did=?', [doctor_id], (error, doc_results) => {
@@ -171,12 +171,13 @@ router.get('/getAppointment/:aid', (req,res) => {
                 throw error
             }
             if (doc_results.length === 0){
-                return res.status(400).send({error: true, message:'User not found.'});
+                return res.status(400).send({error: true, message:'Doctor not found.'});
             }
-            doctor_name = `${doc_results[0].dfname} ${doc_results[0].dlname}`
             const obj = {
-                patient: patient_name,
-                doctor: doctor_name,
+                patient_name: patient_name[0],
+                patient_sname: patient_name[1],
+                doctor_name: doc_results[0].dfname,
+                doctor_sname: doc_results[0].dlname,
                 date: a_date,
                 status: results[0].status
             }
@@ -188,8 +189,10 @@ router.get('/getAppointment/:aid', (req,res) => {
 });
 
 router.post('/makeDiagnosis/', (req, res) =>{
-    let data = req.body
-    let patient_id
+    const data = fetch("http://localhost:3000/getAppointment/" +aid, {
+        method: 'GET'
+    }).json();
+    console.log(data.patient);
 })
 
 var port = process.env.RDS_PORT || 3000

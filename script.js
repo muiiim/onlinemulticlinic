@@ -155,8 +155,8 @@ async function getAppointment(aid){
         text = 
         `
         <div class="result">
-            <h3>Patient Name: ${appointments.patient}</h3><br>
-            Doctor: ${appointments.doctor} <br>
+            <h3>Patient Name: ${appointments.patient_name} ${appointments.patient_sname} </h3><br>
+            Doctor: ${appointments.doctor_name} ${appointments.doctor_sname}<br>
             Date: ${new Date(appointments.date).toDateString()} <br>
             Status: ${appointments.status} <br>
         </div>
