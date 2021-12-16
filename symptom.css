@@ -89,6 +89,20 @@ body {
     margin: auto;
   
   } */
+
+  button {
+    width: 45%;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-container{
+    margin: 40px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   
   /* Change styles for span and cancel button on extra small screens */
@@ -101,3 +115,9 @@ body {
        width: 100%;
     }
   } 
+
+  
+  .result{
+    margin-left: 0;
+    align-items: start;
+  }

@@ -111,3 +111,59 @@ async function createAppointment(doctor, patient, date){
     }
 
 }
+
+async function diagnose(did, pname, symptom, comment){
+    const obj = {
+        doctor_id: did,
+        patient_name: pname,
+        symptom: symptom,
+        comment: comment
+    }
+    console.log(obj);
+    const res = await (await fetch("http://localhost:3000/makeDiagnosis/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+        })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+}
+
+async function getAppointment(aid){
+    const res = await (await fetch("http://localhost:3000/getAppointment/" +aid, {
+        method: 'GET'
+    })).json();
+    let appointments = res.data;
+    console.log(appointments);
+    if(!appointments) {
+        document.getElementById("res_appointment").innerHTML = `
+        <div class="result">
+            <h3>Patient Name: Not found</h3><br>
+            Doctor: -  <br>
+            Date: -  <br>
+            Status: -  <br>
+        </div>
+        
+        `
+    }
+
+        text = 
+        `
+        <div class="result">
+            <h3>Patient Name: ${appointments.patient}</h3><br>
+            Doctor: ${appointments.doctor} <br>
+            Date: ${new Date(appointments.date).toDateString()} <br>
+            Status: ${appointments.status} <br>
+        </div>
+        
+        `
+
+
+
+    document.getElementById("res_appointment").innerHTML = text
+}

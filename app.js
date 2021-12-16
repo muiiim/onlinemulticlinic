@@ -112,7 +112,6 @@ router.post('/makeAppointment/', (req, res) => {
     let data = req.body
     let patient_name
     let patient_id
-    let doctor_name
     let doctor_id
     console.log(data);
     if (!data.doctor || !data.patient || !data.date){
@@ -146,6 +145,51 @@ router.post('/makeAppointment/', (req, res) => {
             })
         })
     })
+})
+
+router.get('/getAppointment/:aid', (req,res) => {
+    let aid = req.params.aid;
+    let doctor_id
+    let doctor_name
+    let a_date
+    if(!aid) {
+        return res.status(400).send({error: true, message:'Please provide appointment ID.'});
+    }
+
+    dbConn.query('SELECT * FROM appointment WHERE apid=?', aid,(error,results) => {
+        if(error) {
+            throw error;
+        }
+        if (results.length === 0){
+            return res.status(400).send({error: true, message:'User not found.'});
+        }
+        patient_name = results[0].n_patient
+        doctor_id = results[0].a_did
+        a_date = results[0].date
+        dbConn.query('select * from doctor where did=?', [doctor_id], (error, doc_results) => {
+            if (error){
+                throw error
+            }
+            if (doc_results.length === 0){
+                return res.status(400).send({error: true, message:'User not found.'});
+            }
+            doctor_name = `${doc_results[0].dfname} ${doc_results[0].dlname}`
+            const obj = {
+                patient: patient_name,
+                doctor: doctor_name,
+                date: a_date,
+                status: results[0].status
+            }
+            res.send({error:false,data: obj, message:'Data retreived'});
+        })
+    });
+
+    
+});
+
+router.post('/makeDiagnosis/', (req, res) =>{
+    let data = req.body
+    let patient_id
 })
 
 var port = process.env.RDS_PORT || 3000
