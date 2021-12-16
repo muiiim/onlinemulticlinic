@@ -64,10 +64,10 @@
       <input type="text" placeholder="Enter Patient name" id="patname" required>
 
       <label for="date"><b>date</b></label><br>
-      <input type="date" placeholder="DD-MM-YY" name="date" required><br><br>
+      <input type="date" placeholder="DD-MM-YY" name="date" id="date" required><br><br>
 
    
-      <button type="submit" onclick="search(document.getElementById('docname').value, document.getElementById('patname').value, document.getElementById('date').value)">Confirm</button>
+      <button type="submit" onclick="createAppointment(document.getElementById('docname').value, document.getElementById('patname').value, document.getElementById('date').value)">Confirm</button>
 
       
     </div>
