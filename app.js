@@ -47,7 +47,6 @@ router.get('/appointment_of_doctor/:name', (req,res) => {
         })
     });
 
-    // console.log(doc_id);
     
 });
 
@@ -105,6 +104,46 @@ router.post('/checkout/', (req, res) => {
                 throw error
             }
             res.send({error:false,message:'Data added'});
+        })
+    })
+})
+
+router.post('/makeAppointment/', (req, res) => {
+    let data = req.body
+    let patient_name
+    let patient_id
+    let doctor_name
+    let doctor_id
+    console.log(data);
+    if (!data.doctor || !data.patient || !data.date){
+        return res.status(400).send({error: true, message:'Please provide Data.'});
+    }
+    dbConn.query('select * from patient where (pfname=? or plname=?)',[data.patient, data.patient], (error, results) =>{
+        if (error){
+            throw error
+        }
+        if (!results){
+            return res.status(400).send({error: true, message:'User not found.'});
+        }
+        patient_name = `${results[0].pfname} ${results[0].plname}`
+        patient_id = results[0].pid
+        dbConn.query('select * from doctor where (dfname=? or dlname=?)',[data.doctor, data.doctor], (error, results) =>{
+            if (error){
+                throw error
+            }
+            if (!results){
+                return res.status(400).send({error: true, message:'User not found.'});
+            }
+            doctor_id = results[0].did
+            dbConn.query('insert into appointment (a_did, a_pid, date, n_patient, status) value (?, ?, ?, ?, ?)', [doctor_id, patient_id, data.date, patient_name, 'did not recieved treatment'], (error, results) => {
+                if (error){
+                    throw error
+                }
+                if (!results){
+                    return res.status(400).send({error: true, message:'User not found.'});
+                }
+                res.send({error:false,message:'Data added'});
+            })
         })
     })
 })
