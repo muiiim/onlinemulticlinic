@@ -112,11 +112,20 @@ async function createAppointment(doctor, patient, date){
 
 }
 
-async function diagnose(aid, symptom, comment){
+async function diagnose(aid, allSymptom, comment, prescription){
+    // console.log(allSymptom);
+    let symptom
+    allSymptom.forEach( sym => {
+        if (sym.checked){
+            symptom = sym
+        }
+    })
+    // console.log(symptom);
     const obj = {
         aid: aid,
-        symptom: symptom,
-        comment: comment
+        symptom: symptom.value,
+        comment: comment || 'no comment',
+        prescription: prescription || 'none'
     }
     console.log(obj);
     const res = await (await fetch("http://localhost:3000/makeDiagnosis/", {

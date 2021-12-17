@@ -83,12 +83,16 @@
       <input type="radio" id="symptom" name="symptom" value="792" required>
       <label for="symptom">Heart Attack</label> <br> <br>
 
+      <label for="Prescription"><b>Prescription</b></label>
+      <input type="text" placeholder="Prescription" id="prescription" required>
+      <br>
+
       <label for="Comment"><b>Comment</b></label>
       <input type="text" placeholder="Doctor Comment" id="comment" required>
 
       <br>
       <div class="button-container">
-          <button class="btn btn-outline-primary" type="submit" onclick="getAppointment(document.getElementById('aID').value)">Get Info</button> <button class="btn btn-primary" type="submit" onclick="search(document.getElementById('aID').value, document.getElementsByName('symptom').values, document.getElementById('comment'))">Submit</button>
+          <button class="btn btn-outline-success" type="submit" onclick="getAppointment(document.getElementById('aID').value)">Get Info</button> <button class="btn btn-success" type="submit" onclick="diagnose(document.getElementById('aID').value, document.getElementsByName('symptom'), document.getElementById('comment').value, document.getElementById('prescription').value)">Submit</button>
       </div>
       
       
