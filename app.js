@@ -39,12 +39,12 @@ router.get('/getAppointmentList/:name', (req,res) => {
             if (error){
                 throw error
             }
-            res.send({error:false,data:appointments,message:'Appointment retrieved'});
+            res.send({error:false,data:appointments,message:'Appointment retrieved'})
         })
-    });
+    })
+})
 
     
-});
 
 router.post('/checkin/', (req, res) => {
     let patient = req.body

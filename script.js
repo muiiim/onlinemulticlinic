@@ -18,7 +18,7 @@ async function getAppointmentList(name) {
     const res = await (await fetch("http://localhost:3000/getAppointmentList/" + name , {
         method: 'GET'
     })).json();
-    console.log(res.data);
+    // console.log(res.data[0]);
     let appointments = res.data;
     console.log(appointments);
     if(!appointments) {
