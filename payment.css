@@ -124,7 +124,7 @@ label {
 }
 
 .btn:hover {
-  background-color: #eef8ee;
+  opacity: 0.8;
 }
 
 a {

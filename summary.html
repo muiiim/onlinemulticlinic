@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment</title>
+    <title>Summary</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="appointment.css">
     <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
@@ -37,8 +37,8 @@
                       <a class="nav-link" href="appointment.html"> Appointment</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="summary.html"> Summary</a>
-                    </li>
+                        <a class="nav-link" href="summary.html"> Summary</a>
+                      </li>
                   </ul>
                 </div>
                
@@ -48,38 +48,23 @@
 
   </header>
 
-
-
-  <h2 class=doctor>Doctor Appointment</h2>
-
+  <h2 class=doctor>Summary Report</h2>
 
     <div class="imgcontainer">
-      <img src="doctor_icon.png" alt="Avatar" class="avatar">
+      <img src="pic/summay.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label for="docname"><b>Doctor name</b></label>
 
-
-      <input type="text" placeholder="Enter Doctor name" id="docname" required>
-
-      <label for="patname"><b>Patient name</b></label>
-      <input type="text" placeholder="Enter Patient name" id="patname" required>
-
-      <label for="date"><b>date</b></label><br>
-      <input type="date" placeholder="DD-MM-YY" name="date" id="date" required><br><br>
-
+        <p class="text-center">The summary of patients visits the doctor.</p>
+        <label for="docname"><b>Doctor name</b></label>
+        <input type="text" placeholder="Enter Doctor name" id="docname" required>
    
-      <button type="submit" onclick="createAppointment(document.getElementById('docname').value, document.getElementById('patname').value, document.getElementById('date').value)">Confirm</button>
-
-      
-    </div>
-
-    
-
+        <button type="submit" onclick="createAppointment(document.getElementById('docname').value, document.getElementById('patname').value, document.getElementById('date').value)">Search</button>
+   
+    </div>   
 
   <div id="res_appointment">
-
 
   </div>
 
