@@ -219,7 +219,7 @@ router.post('/makeDiagnosis/', (req, res) =>{
                     if (error){
                         throw error
                     }
-                    dbConn.query('insert into payment set p_pid=?, name=?, totalcost=?, p_apid=?, is_check=?', [appointment[0].a_pid, appointment[0].n_patient, 20000, appointment[0].apid, 0], (error, resutl) => {
+                    dbConn.query('replace into payment set p_pid=?, name=?, totalcost=?, p_apid=?, is_check=?', [appointment[0].a_pid, appointment[0].n_patient, 20000, appointment[0].apid, 0], (error, resutl) => {
                         if (error){
                             throw error
                         }
