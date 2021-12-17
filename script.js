@@ -230,9 +230,12 @@ async function doPayment(pname, cname, cnum, exp, cvv){
         })).json()
     if (res.error){
         alert('Data incorrect')
+        
     } else{
         alert('Data added successfully.')
+        await window.location.replace("success.html")
     }
+    
 }
 
 async function getSummary(doctor, date) {
