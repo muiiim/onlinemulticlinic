@@ -13,33 +13,42 @@ function isString(x) {
     return Object.prototype.toString.call(x) === "[object String]"
   }
 
-async function searchAppointment(value) {
+async function getAppointmentList(name) {
     console.log("haha")
-    const res = await (await fetch("http://localhost:3000/appointment_of_doctor/" +value, {
+    const res = await (await fetch("http://localhost:3000/getAppointmentList/" + name , {
         method: 'GET'
     })).json();
+    console.log(res.data);
     let appointments = res.data;
     console.log(appointments);
     if(!appointments) {
-        document.getElementById("res_appointment").innerHTML = `Cannot found`
+        document.getElementById("res_appointment").innerHTML = `Cannot find Appointment`
     }
+    let totalCost = 0
     lists = ''
     appointments.forEach(app =>{
         lists += 
+            `
+            <div class="card mb-3" style="width: 18rem; display:flex;">
+                <div class="card-body">
+                    <h5 class="card-title">Appointment ID: ${app.apid} </h5>
+                    <h6 class="card-subtitle">By ${app.n_doctor}</h6> <br>
+                    <h6>Diagnosis: ${app.diagnosis}</h6>
+                    <h6>Prescription: ${app.prescription}</h6>
+                    <h6>Date: ${new Date(app.date).toDateString()}</h6> <br>
+                    Status: ${app.status} <br>
+                </div>
+            </div>
+            `
+            totalCost += 20000
+        })
+        lists += 
         `
-        <link rel="stylesheet" type="text/css" href="appointment.css">
-        <div class="result">
-            <h3>Patient ID: ${app.a_pid} </h3><br>
-            Name: ${app.n_patient} <br>
-            Date: ${new Date(app.date).toDateString()} <br>
-            Time: ${app.time} <br>
-            Status: ${app.status} <br><br>
+        <br>
+        <div class="text-center" style="">
+        <h3>Total cost: ${totalCost} </h3>
         </div>
-        
         `
-
-    })
-
     document.getElementById("res_appointment").innerHTML = lists
 }
 
@@ -196,6 +205,28 @@ async function register(name, sname, address, email, bdate, phone, allGender){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(obj)
+        })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+}
+
+async function doPayment(pname, cname, cnum, exp, cvv){
+    const req = {
+        pname: pname,
+        cname: cname,
+        cnum: cnum,
+        exp: exp,
+        cvv: cvv,
+    }
+    const res = await (await fetch("http://localhost:3000/pay/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(req)
         })).json()
     if (res.error){
         alert('Data incorrect')

@@ -24,26 +24,22 @@ dbConn.connect((err) => {
 });
 
 // Search appointment for each doctor
-router.get('/appointment_of_doctor/:name', (req,res) => {
-    let doctor_name = req.params.name;
-    console.log(doctor_name)
-    let doc_id
-    if(!doctor_name) {
-        return res.status(400).send({error: true, message:'Please provide doctor name.'});
+router.get('/getAppointmentList/:name', (req,res) => {
+    let patient_name = req.params.name;
+    let pat_id
+    if(!patient_name) {
+        return res.status(400).send({error: true, message:'Please provide patient name.'});
     }
-
-    dbConn.query('SELECT * FROM doctor WHERE (dfname=? OR dlname=?)', [doctor_name, doctor_name],(error,results) => {
+    dbConn.query('SELECT * FROM patient WHERE (pfname=? OR plname=?)', [patient_name, patient_name],(error,patients) => {
         if(error) {
             throw error;
         }
-        doc_id = results[0].did
-        // console.log(doc_id);
-        // res.send({error:false,data:results,message:'Name retrieved'});
-        dbConn.query('select * from appointment where a_did=?', [doc_id], (error, results) => {
+        pat_id = patients[0].pid
+        dbConn.query('select * from appointment where (a_pid=? and status=?)', [pat_id, 'received treatment'], (error, appointments) => {
             if (error){
                 throw error
             }
-            res.send({error:false,data:results,message:'Appointment retrieved'});
+            res.send({error:false,data:appointments,message:'Appointment retrieved'});
         })
     });
 
@@ -126,15 +122,15 @@ router.post('/makeAppointment/', (req, res) => {
         }
         patient_name = `${results[0].pfname} ${results[0].plname}`
         patient_id = results[0].pid
-        dbConn.query('select * from doctor where (dfname=? or dlname=?)',[data.doctor, data.doctor], (error, results) =>{
+        dbConn.query('select * from doctor where (dfname=? or dlname=?)',[data.doctor, data.doctor], (error, doctors) =>{
             if (error){
                 throw error
             }
-            if (!results){
+            if (!doctors){
                 return res.status(400).send({error: true, message:'Doctor not found.'});
             }
-            doctor_id = results[0].did
-            dbConn.query('insert into appointment (a_did, a_pid, date, n_patient, status) value (?, ?, ?, ?, ?)', [doctor_id, patient_id, data.date, patient_name, 'did not recieved treatment'], (error, results) => {
+            doctor_id = doctors[0].did
+            dbConn.query('insert into appointment (a_did, a_pid, date, n_patient, n_doctor, status) value (?, ?, ?, ?, ?, ?)', [doctor_id, patient_id, data.date, patient_name, `${doctors[0].dfname} ${doctors[0].dlname}`,'did not recieved treatment'], (error, results) => {
                 if (error){
                     throw error
                 }
@@ -245,6 +241,36 @@ router.post('/register/', (req, res) => {
         }
         res.send({error:false,message:'Patient added'});
     })
+})
+
+router.post('/pay/', (req, res) => {
+    let patient_name = req.body.pname
+    let data = req.body
+    let patient_id
+    console.log(data);
+    if(!patient_name){
+        return res.status(400).send({error: true, message:'Please provide patient name.'});
+    }
+    dbConn.query('select * from patient where (pfname=? or plname=?)',[data.pname, data.pname], (error, patients) =>{
+        if (error){
+            throw error
+        }
+        if (!patients){
+            return res.status(400).send({error: true, message:'Patient not found.'});
+        }
+        dbConn.query('select * from appointment where (a_pid=? and status=?)', [patients[0].pid, 'received treatment'], (error, appointments) => {
+            appointments.forEach(app => {
+                console.log(app);
+                dbConn.query('update payment set creditcard=?, name=?, exp=?, cvv=?, totalcost=?, is_check=? where (p_apid=? and is_check=?)', [data.cnum, data.cname, `01/${data.exp}`, data.cvv, 20000, 1, app.apid, 0], (err, res) => {
+                    if (err){
+                        throw err
+                    }
+                })
+            })
+        })
+        
+    })
+    res.send({error:false,message:'Payment successful'});
 })
 
 var port = process.env.RDS_PORT || 3000
