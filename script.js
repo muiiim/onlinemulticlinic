@@ -172,3 +172,34 @@ async function getAppointment(aid){
     document.getElementById("res_appointment").innerHTML = text
     }  
 }
+
+async function register(name, sname, address, email, bdate, phone, allGender){
+    let gender
+    allGender.forEach( gend => {
+        if (gend.checked){
+            gender = gend.value
+        }
+    })
+    const obj = {
+        fname: name,
+        lname: sname,
+        address: address,
+        email: email,
+        bdate: bdate,
+        phone: phone,
+        gender: gender
+    }
+    console.log(obj);
+    const res = await (await fetch("http://localhost:3000/register/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+        })).json()
+    if (res.error){
+        alert('Data incorrect')
+    } else{
+        alert('Data added successfully.')
+    }
+}

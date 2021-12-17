@@ -234,6 +234,19 @@ router.post('/makeDiagnosis/', (req, res) =>{
     
 })
 
+router.post('/register/', (req, res) => {
+    let data = req.body
+    if (!data){
+        return res.status(400).send({error: true, message:'Please provide data.'});
+    }
+    dbConn.query('replace into patient set pfname=?, plname=?, paddress=?, pemail=?, pbd=?, pphone=?, pgender=?', [data.fname, data.lname, data.address, data.email, data.bdate, data.phone, data.gender], (error, results) => {
+        if (error){
+            throw error
+        }
+        res.send({error:false,message:'Patient added'});
+    })
+})
+
 var port = process.env.RDS_PORT || 3000
 
 app.listen(port, () => {
