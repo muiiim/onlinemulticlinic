@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="register.css">
   <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
- 
+  <script src="script.js"></script>
 
 </head>
 <body>
@@ -68,9 +68,9 @@
     <input type="text" placeholder="e.g. 09-9999-9999" name="pphone" id="pphone" required>
 
     <label for="gender"><b>Gender</b></label><br>
-    <input type="radio" id="gender" name="gender" value="Male">
+    <input type="radio" id="gender" name="gender" value="M">
     <label for="Male">Male</label>
-    <input type="radio" id="gender" name="gender" value="Female">
+    <input type="radio" id="gender" name="gender" value="F">
     <label for="Female">Female</label><br>
 
 
@@ -78,7 +78,7 @@
 
     <hr>
 
-    <button type="submit" class="registerbtn">Register</button>
+    <button class="btn btn-success" type="submit" onclick="register(document.getElementById('fname').value, document.getElementById('lname').value, document.getElementById('paddress').value, document.getElementById('email').value, document.getElementById('bdate').value, document.getElementById('pphone').value, document.getElementsByName('gender'))">Register</button>
   </div>
   
 
