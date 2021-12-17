@@ -4,7 +4,7 @@
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
+  <title>Register</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="register.css">
   <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
@@ -22,7 +22,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" href="register.html">Register</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="check.html">Checking in-out</a>
@@ -49,21 +49,36 @@
     <p>Please fill in this form to create an account.</p>
     <hr>
 
+    <label for="fname"><b>First Name</b></label>
+    <input type="text" placeholder="First Name" name="fname" id="fname" required>
+
+    <label for="lname"><b>Last Name</b></label>
+    <input type="text" placeholder="Last Name" name="lname" id="lname" required>
+
+    <label for="paddress"><b>Address</b></label>
+    <input type="text" placeholder="Address" name="paddress" id="paddress" required>
+
     <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    <input type="text" placeholder="email@address.com" name="email" id="email" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+    <label for="bdate"><b>Date of Birth</b></label><br>
+    <input type="date" name="bdate" id="bdate" required><br><br>
 
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+    <label for="pphone"><b>Phone Number</b></label>
+    <input type="text" placeholder="e.g. 09-9999-9999" name="pphone" id="pphone" required>
+
+    <label for="gender"><b>Gender</b></label><br>
+    <input type="radio" id="gender" name="gender" value="Male">
+    <label for="Male">Male</label>
+    <input type="radio" id="gender" name="gender" value="Female">
+    <label for="Female">Female</label><br>
+
+
+
+
     <hr>
 
     <button type="submit" class="registerbtn">Register</button>
-  </div>
-  
-  <div class="container signin">
-    <p>Already have an account? <a href="login.html">login</a></p>
   </div>
   
 
