@@ -234,3 +234,33 @@ async function doPayment(pname, cname, cnum, exp, cvv){
         alert('Data added successfully.')
     }
 }
+
+async function getSummary(doctor, date) {
+    const res = await (await fetch("http://localhost:3000/getSummary/" +`${doctor}/${date}` , {
+        method: 'GET',
+    })).json();
+    console.log(res.data);
+    let appointments = res.data;
+    console.log(appointments);
+    if(!appointments) {
+        document.getElementById("res_appointment").innerHTML = `Cannot find Appointment`
+    }
+    lists = ''
+    appointments.forEach(app =>{
+        lists += 
+            `
+            <div class="card" style="width: 18rem; display:flex;">
+                <div class="card-body">
+                    <h6 class="card-header">Appointment ID: ${app.apid} </h6> <br>
+                    <h5 class="card-title text-center">${app.n_patient} </h5>
+                    <h6 class="card-subtitle text-center">By ${app.n_doctor}</h6> <br>
+                    <h6>Diagnosis: ${app.diagnosis}</h6>
+                    <h6>Prescription: ${app.prescription}</h6>
+                    <h6>Date: ${new Date(app.date).toDateString()}</h6> <br>
+                    Status: ${app.status} <br>
+                </div>
+            </div>
+            `
+        })
+    document.getElementById("res_appointment").innerHTML = lists
+}

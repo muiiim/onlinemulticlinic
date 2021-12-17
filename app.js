@@ -273,6 +273,26 @@ router.post('/pay/', (req, res) => {
     res.send({error:false,message:'Payment successful'});
 })
 
+router.get('/getSummary/:doctor/:date', (req, res) => {
+    let data = req.params
+
+    let month =  `${data.date.split('-')[1]}`
+    let year = `${data.date.split('-')[0]}`
+    console.log(data);
+    dbConn.query('select * from doctor where (dfname=? or dlname=?)',[data.doctor, data.doctor], (error, doctors) =>{
+        if (error){
+            throw error
+        }
+        dbConn.query('select * from appointment where (a_did=? and (month(date) = ? and year(date) = ? ))', [doctors[0].did, month, year], (err, appointments) => {
+            if (err){
+                throw err
+            }
+            console.log(appointments)
+            res.send({error:false, data:appointments, message:'Appointment Retrived'});
+        })
+    })
+})
+
 var port = process.env.RDS_PORT || 3000
 
 app.listen(port, () => {

@@ -59,12 +59,16 @@
         <p class="text-center">The summary of patients visits the doctor.</p>
         <label for="docname"><b>Doctor name</b></label>
         <input type="text" placeholder="Enter Doctor name" id="docname" required>
-   
-        <button type="submit" onclick="createAppointment(document.getElementById('docname').value, document.getElementById('patname').value, document.getElementById('date').value)">Search</button>
-   
-    </div>   
 
-  <div id="res_appointment">
+        <label for="month"><b>Interval</b></label><br>
+        <input type="month" name="month" id="month">
+   
+        <button type="submit" onclick="getSummary(document.getElementById('docname').value, document.getElementById('month').value)">Search</button>
+   
+    </div>
+    <br>
+
+  <div class="card-deck row" id="res_appointment" style="margin: auto; width: 50%;">
 
   </div>
 
