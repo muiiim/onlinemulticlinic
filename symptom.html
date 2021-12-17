@@ -2,12 +2,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sympton</title>
+    <title>Symptom</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="symptom.css">
     <script src="https://kit.fontawesome.com/c73d7dcdfc.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,300;1,900&display=swap" rel="stylesheet">
+    <script src='script.js'></script>
 
 </head>
 <body>
@@ -56,21 +57,44 @@
 
     <div class="container">
 
-      <label for="docID"><b>Doctor ID</b></label>
-      <input type="text" placeholder="Enter doctor ID" id="docID" required>
+      <label for="docID"><b>Appointment ID</b></label>
+      <input type="text" placeholder="Enter appointment ID" id="aID" required>
 
-      <label for="patname"><b>Patient name</b></label>
-      <input type="text" placeholder="Enter patient name" id="Patname" required>
+      <div id="res_appointment">
+        <div class="result">
+            <h3>Patient Name: </h3><br>
+            Doctor: <br>
+            Date:  <br>
+            Status:  <br>
+        </div>
+      </div> <br>
 
-      <label for="symptom"><b>Patient Symptom</b></label>
-      <input type="text" placeholder="Enter symptom" id="symptom" required>
+      <label for="sym"><b>Patient Symptom</b></label> <br>
+      <input type="radio" id="symptom" name="symptom" value="111" required> 
+      <label for="symptom">Headache</label> 
+      <input type="radio" id="symptom" name="symptom" value="113" required> 
+      <label for="symptom">Flu</label> 
+      <input type="radio" id="symptom" name="symptom" value="114" required> 
+      <label for="symptom">Sore Throat</label> 
+      <input type="radio" id="symptom" name="symptom" value="375" required>
+      <label for="symptom">Cancer</label> 
+      <input type="radio" id="symptom" name="symptom" value="666" required>
+      <label for="symptom">Depression</label> 
+      <input type="radio" id="symptom" name="symptom" value="792" required>
+      <label for="symptom">Heart Attack</label> <br> <br>
+
+      <label for="Prescription"><b>Prescription</b></label>
+      <input type="text" placeholder="Prescription" id="prescription" required>
+      <br>
 
       <label for="Comment"><b>Comment</b></label>
       <input type="text" placeholder="Doctor Comment" id="comment" required>
 
-
-          
-      <button type="submit" onclick="search(document.getElementById('docname').value)">Submit</button>
+      <br>
+      <div class="button-container">
+          <button class="btn btn-outline-success" type="submit" onclick="getAppointment(document.getElementById('aID').value)">Get Info</button> <button class="btn btn-success" type="submit" onclick="diagnose(document.getElementById('aID').value, document.getElementsByName('symptom'), document.getElementById('comment').value, document.getElementById('prescription').value)">Submit</button>
+      </div>
+      
       
     </div>
 

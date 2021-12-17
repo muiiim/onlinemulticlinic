@@ -112,7 +112,6 @@ router.post('/makeAppointment/', (req, res) => {
     let data = req.body
     let patient_name
     let patient_id
-    let doctor_name
     let doctor_id
     console.log(data);
     if (!data.doctor || !data.patient || !data.date){
@@ -123,7 +122,7 @@ router.post('/makeAppointment/', (req, res) => {
             throw error
         }
         if (!results){
-            return res.status(400).send({error: true, message:'User not found.'});
+            return res.status(400).send({error: true, message:'Patient not found.'});
         }
         patient_name = `${results[0].pfname} ${results[0].plname}`
         patient_id = results[0].pid
@@ -132,7 +131,7 @@ router.post('/makeAppointment/', (req, res) => {
                 throw error
             }
             if (!results){
-                return res.status(400).send({error: true, message:'User not found.'});
+                return res.status(400).send({error: true, message:'Doctor not found.'});
             }
             doctor_id = results[0].did
             dbConn.query('insert into appointment (a_did, a_pid, date, n_patient, status) value (?, ?, ?, ?, ?)', [doctor_id, patient_id, data.date, patient_name, 'did not recieved treatment'], (error, results) => {
@@ -146,6 +145,93 @@ router.post('/makeAppointment/', (req, res) => {
             })
         })
     })
+})
+
+router.get('/getAppointment/:aid', (req,res) => {
+    let aid = req.params.aid;
+    let doctor_id
+    let doctor_name
+    let a_date
+    if(!aid) {
+        return res.status(400).send({error: true, message:'Please provide appointment ID.'});
+    }
+
+    dbConn.query('SELECT * FROM appointment WHERE apid=?', aid,(error,results) => {
+        if(error) {
+            throw error;
+        }
+        if (results.length === 0){
+            return res.status(400).send({error: true, message:'Patient not found.'});
+        }
+        patient_name = results[0].n_patient.split(' ')
+        doctor_id = results[0].a_did
+        a_date = results[0].date
+        dbConn.query('select * from doctor where did=?', [doctor_id], (error, doc_results) => {
+            if (error){
+                throw error
+            }
+            if (doc_results.length === 0){
+                return res.status(400).send({error: true, message:'Doctor not found.'});
+            }
+            const obj = {
+                patient_name: patient_name[0],
+                patient_sname: patient_name[1],
+                doctor_name: doc_results[0].dfname,
+                doctor_sname: doc_results[0].dlname,
+                date: a_date,
+                status: results[0].status
+            }
+            res.send({error:false,data: obj, message:'Data retreived'});
+        })
+    });
+
+    
+});
+
+router.post('/makeDiagnosis/', (req, res) =>{
+    let inp = req.body
+    if (!inp){
+        return res.status(400).send({error: true, message:'Please provide appointment ID.'});
+    }
+    dbConn.query('select * from clinic.disease_symptoms where sid=?', [inp.symptom], (error, sym) =>{
+        if (error){
+            throw error
+        }
+        if (!sym){
+            return res.status(400).send({error: true, message:'Symptom not found'});
+        }
+        dbConn.query('select * from appointment where apid=?', [inp.aid], (error, appointment) => {
+            if (error){
+                throw error
+            }
+            if (!appointment){
+                return res.status(400).send({error: true, message:'Appointment not found'});
+            }
+            dbConn.query('select * from clinic.check where (c_pid=? and checkio=?) order by checkid desc', [appointment[0].a_pid, 'IN'], (error, check) => {
+                if (error){
+                    throw error
+                }
+                if (!check){
+                    return res.status(400).send({error: true, message:'Timestamp not found'});
+                }
+                console.log(check);
+                dbConn.query('update clinic.appointment set a_sid=?, symptom=?, diagnosis=?, comments=?, status=?, time=?, prescription=? where apid=?', [inp.symptom, sym[0].symptoms, sym[0].disease, inp.comment, 'received treatment', check[0].time, inp.prescription, inp.aid], (error, results) =>{
+                    if (error){
+                        throw error
+                    }
+                    dbConn.query('insert into payment set p_pid=?, name=?, totalcost=?, p_apid=?, is_check=?', [appointment[0].a_pid, appointment[0].n_patient, 20000, appointment[0].apid, 0], (error, resutl) => {
+                        if (error){
+                            throw error
+                        }
+                        res.send({error:false,message:'Appointment updated'});
+                    })
+                })
+            })
+            
+        })
+        
+    })
+    
 })
 
 var port = process.env.RDS_PORT || 3000
