@@ -112,10 +112,9 @@ async function createAppointment(doctor, patient, date){
 
 }
 
-async function diagnose(did, pname, symptom, comment){
+async function diagnose(aid, symptom, comment){
     const obj = {
-        doctor_id: did,
-        patient_name: pname,
+        aid: aid,
         symptom: symptom,
         comment: comment
     }
@@ -148,10 +147,9 @@ async function getAppointment(aid){
             Date: -  <br>
             Status: -  <br>
         </div>
-        
         `
     }
-
+    else{
         text = 
         `
         <div class="result">
@@ -162,8 +160,6 @@ async function getAppointment(aid){
         </div>
         
         `
-
-
-
     document.getElementById("res_appointment").innerHTML = text
+    }  
 }

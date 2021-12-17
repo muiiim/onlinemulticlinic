@@ -69,15 +69,26 @@
         </div>
       </div> <br>
 
-      <label for="symptom"><b>Patient Symptom</b></label>
-      <input type="text" placeholder="Enter symptom" id="symptom" required>
+      <label for="sym"><b>Patient Symptom</b></label> <br>
+      <input type="radio" id="symptom" name="symptom" value="111" required> 
+      <label for="symptom">Headache</label> 
+      <input type="radio" id="symptom" name="symptom" value="113" required> 
+      <label for="symptom">Flu</label> 
+      <input type="radio" id="symptom" name="symptom" value="114" required> 
+      <label for="symptom">Sore Throat</label> 
+      <input type="radio" id="symptom" name="symptom" value="375" required>
+      <label for="symptom">Cancer</label> 
+      <input type="radio" id="symptom" name="symptom" value="666" required>
+      <label for="symptom">Depression</label> 
+      <input type="radio" id="symptom" name="symptom" value="792" required>
+      <label for="symptom">Heart Attack</label> <br> <br>
 
       <label for="Comment"><b>Comment</b></label>
       <input type="text" placeholder="Doctor Comment" id="comment" required>
 
       <br>
       <div class="button-container">
-          <button class="btn btn-outline-primary" type="submit" onclick="getAppointment(document.getElementById('aID').value)">Get Info</button> <button class="btn btn-primary" type="submit" onclick="search(document.getElementById('docID').value, document.getElementById('Patname').value, document.getElementById('symptom').value, document.getElementById('comment').value)">Submit</button>
+          <button class="btn btn-outline-primary" type="submit" onclick="getAppointment(document.getElementById('aID').value)">Get Info</button> <button class="btn btn-primary" type="submit" onclick="search(document.getElementById('aID').value, document.getElementsByName('symptom').values, document.getElementById('comment'))">Submit</button>
       </div>
       
       

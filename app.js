@@ -189,10 +189,22 @@ router.get('/getAppointment/:aid', (req,res) => {
 });
 
 router.post('/makeDiagnosis/', (req, res) =>{
-    const data = fetch("http://localhost:3000/getAppointment/" +aid, {
-        method: 'GET'
-    }).json();
-    console.log(data.patient);
+    let inp = req.body
+    if (!inp){
+        return res.status(400).send({error: true, message:'Please provide appointment ID.'});
+    }
+    dbConn.query('select * from disease_symptoms where sid=?', inp.symptom, (error, sym) =>{
+        if (error){
+            throw error
+        }
+        if (!sym){
+            return res.status(400).send({error: true, message:'Symptom not found'});
+        }
+        dbConn.query('update appointment set sid=?, title=?, diagnosis=?, comment=? where apid=?', [inp.symptom, sym.title, sym.symptoms, inp.comment, inp.aid], (error, results) =>{
+            
+        })
+    })
+    
 })
 
 var port = process.env.RDS_PORT || 3000
